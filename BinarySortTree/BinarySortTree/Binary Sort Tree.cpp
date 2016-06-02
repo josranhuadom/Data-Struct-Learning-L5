@@ -35,16 +35,25 @@ void InsertBST(BSTree *&T, ElemType e)
 void CreatBST(BSTree *&T)
 {
 	T = NULL;
+	cout << "请输入想要插入的值，-1结束" << endl;
 	cin >> e.key;
-	if (e.key == '#')
-	{
-		cout << "娌℃湁寤虹珛鏁扮粍" << endl;
-		return;
-	}
-	else
+	while (e.key  != EOF)
 	{
 		InsertBST(T, e);
+		cout << "请继续输入想要插入的值，-1结束" << endl;
 		cin >> e.key;
+	} 
+	cout << "二叉树建立结束" << endl << endl;
+}
+
+//中序遍历
+void InOrderTraversal(BSTree *T)
+{
+	if (T)
+	{
+		InOrderTraversal(T->lchild);
+		cout << T->data.key << " ";
+		InOrderTraversal(T->rchild);
 	}
 }
 
@@ -52,4 +61,14 @@ int main()
 {
 	BSTree *T = new BSTree;
 	CreatBST(T);
+	if (T == NULL)
+		cout << "没有建立二叉树" << endl;
+	else
+	{
+		cout << "中序遍历结果" << endl;
+		InOrderTraversal(T);
+	}
+
+	cout << endl;
+	system("pause");
 }

@@ -4,62 +4,64 @@ using namespace std;
 typedef int KeyType;
 typedef int InfoType;
 
-//æ„å»ºå…ƒç´ ç±»å‹
+//¹¹½¨ÔªËØÀàĞÍ
 typedef struct
 {
 	KeyType key;
 	InfoType i;
 }ElemType;
-//æ„å»ºé¡ºåºè¡¨ç±»å‹
+//¹¹½¨Ë³Ğò±íÀàĞÍ
 typedef struct
 {
 	ElemType *R;
 	int length;
 }Table;
 
-//æŠ˜åŠæŸ¥æ‰¾æ³•
+//ÕÛ°ë²éÕÒ·¨
 int BinarySearch(Table T, KeyType K, int low, int high)
 {
 	int mid;
-	if (low <= high)
+	if (low > high)
+		return -1;
+	else
 	{
 		mid = (low + high) / 2;
-		if (K == T.R[mid].key)  //è¿™é‡Œå‡ºé”™
+		if (K == T.R[mid].key)
 			return mid;
+		if (K > T.R[mid].key)
+			return BinarySearch(T, K, mid + 1, high);
 		else
-			if (K < T.R[mid].key)
-				BinarySearch(T, K, low, mid - 1);
-			else BinarySearch(T, K, mid + 1, high);
+			return BinarySearch(T, K, low, mid - 1);
 	}
 	return 0;
 }
 
 void main()
 {
-	Table T;  //æ„å»ºé¡ºåºè¡¨T
-	T.R = new ElemType[MAXNUM];  //ä¸ºé¡ºåºè¡¨æ„å»ºç©ºé—´
+	Table T;  //¹¹½¨Ë³Ğò±íT
+	T.R = new ElemType[MAXNUM];  //ÎªË³Ğò±í¹¹½¨¿Õ¼ä
 	KeyType K;
-	cout << "è¾“å…¥å³å°†è¾“å…¥çš„å…ƒç´ æ•°é‡ï¼ˆå¤§äº8ä¸ªï¼‰" << endl;
+	cout << "ÊäÈë¼´½«ÊäÈëµÄÔªËØÊıÁ¿£¨´óÓÚ8¸ö£©" << endl;
 	cin >> T.length;
 	while (T.length <= 8)
 	{
-		cout << "å°äº8ä¸ªï¼Œè¯·é‡æ–°è¾“å…¥" << endl;
+		cout << "Ğ¡ÓÚ8¸ö£¬ÇëÖØĞÂÊäÈë" << endl;
 		cin >> T.length;
 	}
 
-	cout << "è¯·æœ‰åºè¾“å…¥å…ƒç´ " << endl;
+	cout << "ÇëÓĞĞòÊäÈëÔªËØ" << endl;
 	for (int i = 1; i <= T.length; i++)
 		cin >> T.R[i].key;
 
-	cout << "å¸Œæœ›æŸ¥æ‰¾çš„å…ƒç´ ä¸º" << endl;
+	cout << "Ï£Íû²éÕÒµÄÔªËØÎª" << endl;
 	cin >> K;
 
 	int low = 1; 
 	int high = T.length; 
 	int result;
-	result = BinarySearch(T, K, low, high);   //è°ƒç”¨å‡½æ•°
-	if (result == 0)
-		cout << "å¸Œæœ›æŸ¥æ‰¾çš„å…ƒç´ ä¸åœ¨æ­¤æ•°ç»„å†…" << endl;
-	else cout << "è¯¥å…ƒç´ çš„ä¸‹æ ‡ä¸ºï¼š" << result << endl;
+	result = BinarySearch(T, K, low, high);   //µ÷ÓÃº¯Êı
+	if (result == -1)
+		cout << "Ï£Íû²éÕÒµÄÔªËØ²»ÔÚ´ËÊı×éÄÚ" << endl;
+	else cout << "¸ÃÔªËØµÄÏÂ±êÎª£º" << result << endl;
 	system("pause");
 }
